@@ -1,4 +1,4 @@
-﻿# Example projects for having an users signing in using an External Login Provider in an Angular application with ASP.NET Core as its back-end
+﻿# Example project for having an users signing in using an External Login Provider in an Angular application with ASP.NET Core as its back-end
 
 
 The Angular project is located in `ApiCookiesAuth\ClientApp\`.
