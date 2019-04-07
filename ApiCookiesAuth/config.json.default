@@ -1,0 +1,19 @@
+﻿{
+  "ConnectionStrings": {
+    "mssql": "Server=(localdb)\\mssqllocaldb;Database=PWDb;Trusted_Connection=True;"
+  },
+  "Authentication": {
+    "Facebook": {
+      "AppId": "Your_AppId",
+      "AppSecret": "Your_AppSecret"
+    },
+    "Google": {
+      "ClientId": "Your_ClientId",
+      "ClientSecret": "Your_ClientSecret"
+    },
+    "Twitter": {
+      "ConsumerKey": "Your_ConsumerKey",
+      "ConsumerSecret": "Your_ConsumerSecret"
+    } 
+  }
+}

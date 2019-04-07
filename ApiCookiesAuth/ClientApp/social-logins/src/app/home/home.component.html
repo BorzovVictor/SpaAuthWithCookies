@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="col-md-12 text-center">
+    <h3 *ngIf="isUserAuthenticated">Hello {{userName}}</h3>
+    <h3 *ngIf="!isUserAuthenticated">Not authenticated</h3>
+    <div *ngIf="isUserAuthenticated" class="row margin-top-md">
+      <div class="col-md-12 text-center">
+        <button class="btn btn-info btn-lg" routerLink="/profile">Profile</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row margin-top-md" *ngIf="isUserAuthenticated">
+  <div class="col-md-12 text-center">
+    <button class="btn btn-dark btn-lg" (click)="logout()">Logout</button>
+  </div>
+</div>
+<div *ngIf="!isUserAuthenticated" class="row">
+  <div class="col">
+      <button class="btn btn-primary btn-lg" (click)="loginGoogle()">Login via Google</button>
+  </div>
+  <div class="col">
+      <button class="btn btn-primary btn-lg" (click)="loginFacebook()">Login via Facebook</button>
+  </div>
+  <div class="col">
+      <button class="btn btn-primary btn-lg" (click)="loginTwitter()">Login via Twitter</button>
+  </div>
+</div>
+
