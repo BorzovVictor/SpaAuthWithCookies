@@ -77,10 +77,8 @@ namespace ApiCookiesAuth.Controllers
                 await _userManager.AddClaimsAsync(appUser, newUserClaims);
                 await _signInManager.SignInAsync(appUser, isPersistent: false);
                 await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-
             }
-
-            return Redirect("http://localhost:4200");                        
+            return Redirect("/");                        
         }
 
         [HttpGet]
@@ -96,7 +94,7 @@ namespace ApiCookiesAuth.Controllers
         public async Task<IActionResult> Logout() 
         {
             await _signInManager.SignOutAsync();
-            return Redirect("http://localhost:4200");
+            return Redirect("/");
         }
 
     }
