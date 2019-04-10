@@ -30,7 +30,8 @@ export class AccountService {
   }
 
   loginGoogle() {
-    this.document.location.href = `${environment.APIEndpoint}/account/SignInWithGoogle`;
+    // this.document.location.href = `${environment.APIEndpoint}/account/SignInWithGoogle`;
+    this.document.location.href = `${environment.APIEndpoint}/account/SignInGoogle`;
   }
 
   loginFacebook() {

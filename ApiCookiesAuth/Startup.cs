@@ -40,24 +40,24 @@ namespace ApiCookiesAuth
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            IdentityBuilder builder = services.AddIdentityCore<AppUser>(opt =>
+            IdentityBuilder builder = services.AddIdentityCore<IdentityUser>(opt =>
             {
                 opt.Password.RequireDigit = false;
                 opt.Password.RequiredLength = PwSettings.PasswordRequiredLength;
                 opt.Password.RequireNonAlphanumeric = false;
                 opt.Password.RequireUppercase = false;
                 opt.Password.RequireLowercase = false;
-//                opt.User.RequireUniqueEmail = true;
+                opt.User.RequireUniqueEmail = true;
                 opt.Lockout.AllowedForNewUsers = false;
                 opt.SignIn.RequireConfirmedEmail = false;
                 opt.User.AllowedUserNameCharacters = null;
             });
 
-            builder = new IdentityBuilder(builder.UserType, typeof(AppRole), builder.Services);
-            builder.AddEntityFrameworkStores<PwContext>();
-            builder.AddRoleValidator<RoleValidator<AppRole>>();
-            builder.AddRoleManager<RoleManager<AppRole>>();
-            builder.AddSignInManager<SignInManager<AppUser>>();
+            builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole), builder.Services);
+            builder.AddEntityFrameworkStores<SimpleContext>();
+            builder.AddRoleValidator<RoleValidator<IdentityRole>>();
+            builder.AddRoleManager<RoleManager<IdentityRole>>();
+            builder.AddSignInManager<SignInManager<IdentityUser>>();
 
             services.AddMvc();
             services.AddCors(corsOptions =>
@@ -69,8 +69,12 @@ namespace ApiCookiesAuth
 
             services.AddDbContext<PwContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("mssql")));
-            services.AddIdentity<AppUser, AppRole>()
-                .AddEntityFrameworkStores<PwContext>()
+            
+            services.AddDbContext<SimpleContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("mssql")));
+
+
+            services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddDefaultTokenProviders();
 
             services.AddAuthentication(options =>
@@ -137,11 +141,11 @@ namespace ApiCookiesAuth
             {
                 app.UseDeveloperExceptionPage();
                 // Seed the database
-                using (var scope = app.ApplicationServices.CreateScope())
-                {
-                    var seeder = scope.ServiceProvider.GetService<PwSeeder>();
-                    seeder.Seed().Wait();
-                }
+                //using (var scope = app.ApplicationServices.CreateScope())
+                //{
+                //    var seeder = scope.ServiceProvider.GetService<PwSeeder>();
+                //    seeder.Seed().Wait();
+                //}
             }
 
             app.UseAuthentication();
@@ -151,15 +155,15 @@ namespace ApiCookiesAuth
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
-            app.UseMvcWithDefaultRoute();
+            // app.UseMvcWithDefaultRoute();
 
-//            app.UseMvc(cfg =>
-//            {
-//                cfg.MapSpaFallbackRoute(
-//                    name: "spa-fallback",
-//                    defaults: new { controller = "Fallback", action = "Index" }
-//                );
-//            });
+            app.UseMvc(cfg =>
+            {
+                cfg.MapSpaFallbackRoute(
+                    name: "spa-fallback",
+                    defaults: new { controller = "Fallback", action = "Index" }
+                );
+            });
         }
     }
 }
